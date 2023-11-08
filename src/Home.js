@@ -1,29 +1,41 @@
 function Home() {
     return (
         <div className="Home">
-            {/* This is navbar */}
-            <header className="flex header top-0 left-0 z-40 w-full items-center bg-transparent absolute justify-center">
-                <div className="px-4 container flex justify-between">
-                    <div className="p-4 flex">
-                        <p className="mx-12 my-4 text-slate-50">Logo</p>
-                        
-                        <div className="md:mx-6 mx-4 flex items-center text-slate-50">
-                            <a className="px-8 text-slate-50" href="/">
+            {/* Navbar */}
+            <div className="flex flex-col header w-full items-center bg-transparent justify-center absolute top-0 left-0 z-40">
+                <div className="px-24 w-full container flex justify-between">
+                    <div className="p-3 mx-8 flex w-1/2">
+                        <p className="my-4 mx-12 font-bold text-slate-50">lonelywolf</p>
+
+                        <div className="flex ml-6 items-center text-slate-50">
+                            <a className="px-6 text-slate-50 hover:underline underline-offset-1" href="/">
                                 <span>Home</span>
                             </a>
-                            <a className="pl-16 px-8 text-slate-50 hover:decoration-dashed" href="/game">
-                                <b>Play</b>
+                            <a className="px-6 text-slate-50 hover:underline underline-offset-1" href="/game">
+                                <span>Play</span>
                             </a>
                         </div>
                     </div>
 
-                    <a className="flex items-center" href="/login">
-                        <span className="py-4 px-12 text-slate-50 hover:bg-blue-600">Login</span>
+                    <a className="mr-12 flex items-center" href="/login">
+                        <span className="py-2 px-8 text-slate-50 border-2 border-indigo-400 rounded-full hover:bg-indigo-800">Login</span>
                     </a>
                 </div>
+            </div>
+            {/* Headers */}
+            <div className="flex flex-col w-full items-center bg-transparent justify-center relative bg-gradient-to-r from-sky-900 to-indigo-900">
 
-                <div className=""></div>
-            </header>
+                <div className="pb-56 pt-48 px-4 flex flex-col container items-center">
+                    <p className="my-3 text-5xl font-semibold text-slate-50">Content of header goes here!</p>
+                    <p className="my-3 text-2xl font-medium text-slate-50">Content of subheader goes here!</p>
+                    <a className="mt-12 py-2 px-8 text-slate-50 bg-indigo-800 rounded-full hover:text-slate-200 hover:bg-indigo-600" href="/game">Join us now!</a>
+                </div>
+            </div>
+
+            {/* Main content */}
+            <div className="px-24 py-8 container flex flex-col">
+                <p className="text-slate-50">Main contents go here!</p>
+            </div>
         </div>
     );
 }

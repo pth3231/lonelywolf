@@ -7,8 +7,6 @@ import Login from './Login'
 import {
   createBrowserRouter,
   RouterProvider,
-  Route,
-  Link,
 } from "react-router-dom";
 
 const router = createBrowserRouter([
