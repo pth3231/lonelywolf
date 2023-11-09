@@ -4,7 +4,7 @@ function Login() {
         <p>
             Edit <code>src/Login.js</code> and save to reload.
         </p>
-        <a>
+        <a href="/">
             Learn React
         </a>
       </div>

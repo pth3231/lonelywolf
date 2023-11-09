@@ -4,6 +4,11 @@ import reportWebVitals from './reportWebVitals';
 import Home from './Home'
 import Game from './Game'
 import Login from './Login'
+import Guild from './components/Guild'
+import Inventory from './components/Inventory'
+import Quest from './components/Quest'
+import Task from './components/Task'
+import Market from './components/Market'
 import {
   createBrowserRouter,
   RouterProvider,
@@ -16,7 +21,30 @@ const router = createBrowserRouter([
   },
   {
     path: "/game",
-    element: <Game></Game>
+    element: <Game></Game>,
+    children: [
+      {
+        path: "guild",
+        element: <Guild></Guild>
+      },
+      {
+        path: "inventory",
+        element: <Inventory></Inventory>
+      },
+      {
+        path: "quest",
+        element: <Quest></Quest>
+      },
+      {
+        path: "task",
+        element: <Task></Task>,
+        index: true
+      },
+      {
+        path: "market",
+        element: <Market></Market>
+      }
+    ]
   },
   {
     path: "/login",

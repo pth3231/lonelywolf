@@ -1,3 +1,16 @@
+/*  
+    Home.js
+    Author: Phan Thai Hoa
+    Team: lonelywolf
+    Date: 7/11/2023
+    Latest update: 8/11/2023
+
+    Description:
+    This have 4 parts: navbar, header, main content and footer
+*/
+
+import { Link } from "react-router-dom";
+
 function Home() {
     return (
         <div className="Home">
@@ -8,18 +21,18 @@ function Home() {
                         <p className="my-4 mx-12 font-bold text-slate-50">lonelywolf</p>
 
                         <div className="flex ml-6 items-center text-slate-50">
-                            <a className="px-6 text-slate-50 hover:underline underline-offset-1" href="/">
+                            <Link className="px-6 text-slate-50 hover:underline underline-offset-1" to="/">
                                 <span>Home</span>
-                            </a>
-                            <a className="px-6 text-slate-50 hover:underline underline-offset-1" href="/game">
+                            </Link>
+                            <Link className="px-6 text-slate-50 hover:underline underline-offset-1" to="/game">
                                 <span>Play</span>
-                            </a>
+                            </Link>
                         </div>
                     </div>
 
-                    <a className="mr-12 flex items-center" href="/login">
+                    <Link to="/login" className="mr-12 flex items-center">
                         <span className="py-2 px-8 text-slate-50 border-2 border-indigo-400 rounded-full hover:bg-indigo-800">Login</span>
-                    </a>
+                    </Link>
                 </div>
             </div>
             {/* Headers */}
@@ -28,7 +41,7 @@ function Home() {
                 <div className="pb-56 pt-48 px-4 flex flex-col container items-center">
                     <p className="my-3 text-5xl font-semibold text-slate-50">Content of header goes here!</p>
                     <p className="my-3 text-2xl font-medium text-slate-50">Content of subheader goes here!</p>
-                    <a className="mt-12 py-2 px-8 text-slate-50 bg-indigo-800 rounded-full hover:text-slate-200 hover:bg-indigo-600" href="/game">Join us now!</a>
+                    <Link to="/game" className="mt-12 py-2 px-8 text-slate-50 bg-indigo-800 rounded-full hover:text-slate-200 hover:bg-indigo-600">Join us now!</Link>
                 </div>
             </div>
 
