@@ -3,7 +3,7 @@
     Author: Phan Thai Hoa
     Team: lonelywolf
     Date: 7/11/2023
-    Latest update: 8/11/2023
+    Latest update: 9/11/2023
 
     Description:
     This have 4 parts: navbar, header, main content and footer

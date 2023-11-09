@@ -3,7 +3,7 @@
 	Author: Phan Thai Hoa
 	Team: lonelywolf
 	Date: 8/11/2023
-	Latest update: 8/11/2023
+	Latest update: 9/11/2023
 
 	Description:
 	This have 3 parts: navbar, stats and task panel
