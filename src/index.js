@@ -36,7 +36,7 @@ const router = createBrowserRouter([
         element: <Quest></Quest>
       },
       {
-        path: "task",
+        path: "",
         element: <Task></Task>,
         index: true
       },

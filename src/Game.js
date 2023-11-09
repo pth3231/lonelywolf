@@ -67,7 +67,7 @@ function Game() {
 						<Link to="/game/guild" className="text-slate-50">Guild</Link>
 						<Link to="/game/market" className="text-slate-50">Market</Link>
 						<Link to="/game/quest" className="text-slate-50">Quest</Link>
-						<Link to="/game/task" className="text-slate-50">Task</Link>
+						<Link to="/game/" className="text-slate-50">Task</Link>
 					</div>
 				)
 			}
