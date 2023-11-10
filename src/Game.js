@@ -3,7 +3,7 @@
 	Author: Phan Thai Hoa
 	Team: lonelywolf
 	Date: 8/11/2023
-	Latest update: 9/11/2023
+	Latest update: 10/11/2023
 
 	Description:
 	This have 3 parts: navbar, stats and task panel
@@ -15,7 +15,8 @@
 import React, { useState } from "react";
 import { Link, Outlet } from "react-router-dom";
 
-function Game() {
+function Game() 
+{
 	const [name, setName] = useState("<anonymous>")
 	const [str, setStr] = useState(0)
 	const [def, setDef] = useState(0)
@@ -23,7 +24,8 @@ function Game() {
 	const [sta, setSta] = useState(0)
 	const [menu, setMenu] = useState(false)
 
-	function toggleMenu() {
+	function toggleMenu() 
+	{
 		setMenu(menu => !menu)
 	}
 
