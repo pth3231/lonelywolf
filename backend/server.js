@@ -12,7 +12,7 @@ const pool = mariadb.createPool({
     host: 'localhost',
     user: 'lonelywolf',
     password: 'lonelywolf',
-    database: "lonelywolf_db",
+    database: 'lonelywolf_db',
     connectionLimit: 5
 })
 
@@ -24,7 +24,7 @@ app.get('/api/v1', (req, res) => {
     res.send("This is our API!")
 })
 
-app.route('/api/v1/auth')
+app.route('/api/v1/auth/signin')
     .get((req, res) => {
         console.log("Got signin route!")
         res.send("Okay, GOT!").status(200)
@@ -40,10 +40,10 @@ app.route('/api/v1/auth')
                         console.log(rows)
                         if (rows[0].username === req_data.data.user && rows[0].pass === req_data.data.pass) {
                             console.log("Thong tin ok")
-                            res.json({status: "Okay"})
+                            res.status(200).json({status: true})
                         } else {
                             console.log("Co gi do sai sai")
-                            res.json({status: "Try again"})
+                            res.status(200).json({status: false})
                         }
                     })
                     .catch(err => {
@@ -51,8 +51,7 @@ app.route('/api/v1/auth')
                         conn.end()
                     })
             })
-            .catch(err => { })
-
+            .catch(err => {})
     })
 
 app.listen(port, () => {
