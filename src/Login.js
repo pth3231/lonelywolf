@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import axios from 'axios'
 
 function Login() {
@@ -39,9 +39,7 @@ function Login() {
         <div className="Login flex justify-center items-center w-full h-screen">
             <div className="flex flex-col container justify-center items-center">
                 <form method="POST" className="flex flex-col w-1/3 h-1/2 p-12 text-slate-50 bg-gradient-to-r from-sky-900 to-indigo-900 rounded-lg">
-                    {
-                        (loginState === false) ? (<p className="text-slate-50">Something is wrong!</p>) : null
-                    }
+                    {(loginState === false) ? (<p className="text-slate-50">Something is wrong!</p>) : null}
                     <Link to="/" className="relative text-sm decoration-dashed top-8 left-0">{"⇐"}</Link>
                     <span className="text-2xl font-medium my-8 mx-auto">Sign in</span>
 
@@ -54,6 +52,7 @@ function Login() {
                     <button type="submit" className="mt-12 bg-indigo-600 w-36 mx-auto py-2 rounded-full" onClick={handleSubmit}>Submit</button>
                     <Link to="forget-password" className="mt-2 text-sm flex justify-end">Forgot your password...</Link>
                 </form>
+                {(loginState === true) ? <Navigate to="/game" replace={true}></Navigate> : null}
             </div>
         </div>
     );

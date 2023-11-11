@@ -12,20 +12,46 @@
 	Task panel will always change its height to show more contents such as tasks, quests, challenges and leaderboard.
 */
 
-import React, { useState } from "react";
-import { Link, Outlet } from "react-router-dom";
+import axios from "axios";
+import React, { useState, useEffect } from "react";
+import { Link, Outlet, useNavigate } from "react-router-dom";
 
-function Game() 
-{
+function Game() {
 	const [name, setName] = useState("<anonymous>")
 	const [str, setStr] = useState(0)
 	const [def, setDef] = useState(0)
 	const [agi, setAgi] = useState(0)
 	const [sta, setSta] = useState(0)
 	const [menu, setMenu] = useState(false)
+	const navigate = useNavigate()
 
-	function toggleMenu() 
-	{
+	async function getData() {
+		let data = await axios.get("http://localhost:6767/api/v1/getstatus", {timeout: 10000})
+			.then(res => {
+				console.log(res.data)
+				return res.data
+			})
+			.catch(err => {
+				console.log(err)
+			})
+		console.log(data)
+		if (data.status === true)
+		{
+			setName(data.figures.acc_name)
+			setStr(data.figures.strength)
+			setDef(data.figures.defense)
+			setAgi(data.figures.agility)
+			setSta(data.figures.stamina)
+		} else {
+			navigate("/login")
+		}
+	}
+
+	useEffect(() => {
+		getData()		
+	}, [])
+
+	function toggleMenu() {
 		setMenu(menu => !menu)
 	}
 
@@ -52,11 +78,11 @@ function Game()
 				<div className="flex flex-col top-0 left-0 w-96 h-full px-6 py-8"></div>
 
 				{/* Task panel div */}
-				<div className="px-8 flex">
-					<p className="mt-12 text-slate-50">
-						This is where contents will be re-rendered: {(menu === false) ? 'True': 'False'}
-						<Outlet/>
+				<div className="px-8 py-12 flex flex-col">
+					<p className="text-slate-50">
+						This is where contents will be re-rendered: {(menu === false) ? 'True' : 'False'}
 					</p>
+					<Outlet />
 				</div>
 			</div>
 
