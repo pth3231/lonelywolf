@@ -15,6 +15,7 @@
 import axios from "axios";
 import React, { useState, useEffect } from "react";
 import { Link, Outlet, useNavigate } from "react-router-dom";
+import wolf_img from './img/wolf.png'
 
 function Game() {
 	const [name, setName] = useState("<anonymous>")
@@ -23,10 +24,12 @@ function Game() {
 	const [agi, setAgi] = useState(0)
 	const [sta, setSta] = useState(0)
 	const [menu, setMenu] = useState(false)
+	const [stepsCount, setStepsCount] = useState(-1)
 	const navigate = useNavigate()
+	const [counterObj, setCounterObj] = useState("")
 
 	async function getData() {
-		let data = await axios.get("http://localhost:6767/api/v1/getstatus", {timeout: 10000})
+		let char_data = await axios.get("http://localhost:6767/api/v1/getstatus", { timeout: 10000 })
 			.then(res => {
 				console.log(res.data)
 				return res.data
@@ -34,21 +37,47 @@ function Game() {
 			.catch(err => {
 				console.log(err)
 			})
-		console.log(data)
-		if (data.status === true)
-		{
-			setName(data.figures.acc_name)
-			setStr(data.figures.strength)
-			setDef(data.figures.defense)
-			setAgi(data.figures.agility)
-			setSta(data.figures.stamina)
+		console.log(char_data)
+		if (char_data.status === true) {
+			setName(char_data.figures.acc_name)
+			setStr(char_data.figures.strength)
+			setDef(char_data.figures.defense)
+			setAgi(char_data.figures.agility)
+			setSta(char_data.figures.stamina)
+
+			let ctr = await axios.get("http://localhost:6767/api/v1/fitapi/geturl")
+				.then(res => {
+					return res.data
+				})
+				.catch(err => {
+					console.error(err)
+					return ""
+				})
+			setCounterObj(ctr)
 		} else {
 			navigate("/login")
 		}
 	}
 
+	function handleOAuth() {
+		window.open(counterObj.url, "_blank")
+	}
+	
+	async function handleRefresh() {
+		let steps = await axios.get("http://localhost:6767/api/v1/fitapi/fetch", {timeout: 2500})
+			.then(res => {
+				console.log(res.data)
+				return res.data
+			})
+			.catch((e) => {
+				console.error(e)
+			})
+
+		setStepsCount(steps[0])
+	}
+
 	useEffect(() => {
-		getData()		
+		getData()
 	}, [])
 
 	function toggleMenu() {
@@ -58,19 +87,24 @@ function Game() {
 	return (
 		<div className="Game">
 			{/* Stats div */}
-			<div className="flex flex-col justify-between absolute top-0 left-0 w-96 h-full px-6 py-32">
-				<div className="flex flex-col w-full bg-slate-800 rounded-lg py-12 border border-slate-500">
-					<img className="px-6 py-12 text-slate-50" src="./" alt="Avatar" />
+			<div className="flex flex-col justify-between absolute top-0 left-0 w-96 h-full px-6 py-16">
+				<div className="flex flex-col w-full bg-slate-800 rounded-lg py-8 border border-slate-500">
+					<img className="px-16 py-16 text-slate-50" src={wolf_img} alt="Avatar" />
 					<span className="px-6 my-3 text-slate-50 font-medium text-xl">Welcome, {name}!</span>
 					<span className="px-10 mt-6 text-slate-50">Strength: {str}</span>
 					<span className="px-10 mt-3 text-slate-50">Defense: {def}</span>
 					<span className="px-10 mt-3 text-slate-50">Agility: {agi}</span>
 					<span className="px-10 mt-3 text-slate-50">Stamina: {sta}</span>
+					<div className="flex ml-2 mr-6 mt-10 justify-around">
+						<span className="text-slate-50 px-4 py-2 bg-gradient-to-l from-slate-600 to-sky-600 border rounded-lg border-slate-200">Steps: {stepsCount}</span>
+						<button className="text-slate-50" onClick={handleRefresh}>Refresh</button>
+					</div>
 				</div>
 
 				<div className="flex w-full bg-slate-800 rounded-lg p-3 align-right border border-slate-500">
-					<button className="text-slate-50">H1</button>
-					<button className="text-slate-50">H2</button>
+					<button className="text-slate-50 px-4">H1</button>
+					<button className="text-slate-50 px-4">H2</button>
+					<button className="text-slate-50 px-4" onClick={handleOAuth}>OAuth2</button>
 				</div>
 			</div>
 			<div className="w-full flex">
@@ -96,6 +130,8 @@ function Game() {
 						<Link to="/game/market" className="text-slate-50">Market</Link>
 						<Link to="/game/quest" className="text-slate-50">Quest</Link>
 						<Link to="/game/" className="text-slate-50">Task</Link>
+						
+						<Link to="/" className="text-slate-50">Home</Link>
 					</div>
 				)
 			}

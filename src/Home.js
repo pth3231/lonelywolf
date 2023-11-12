@@ -39,13 +39,13 @@ function Home()
             </div>
             {/* Headers */}
             <div className="flex w-full items-center bg-transparent justify-center relative bg-blue-950 bg-gradient-to-l from-sky-900 to-blue-950 ">
-                <img src={wolf_img} alt="Cover" className="absolute left-24 top-20 opacity-30 z-20"></img>
-                <div className="pb-68 py-72 px-4 flex flex-col container items-center z-19">
+                <div className="pb-68 py-72 px-4 flex flex-col container items-center z-21">
                     <p className="my-3 text-6xl font-semibold text-slate-50">Gamify your fitness</p>
                     <p className="my-3 text-2xl font-medium text-slate-50">for a better life!</p>
                     <Link to="/game" className="mt-12 py-2 px-8 text-slate-50 bg-indigo-800 rounded-full hover:text-slate-200 hover:bg-indigo-600">Join us now!</Link>
                 </div>
                 
+                <img src={wolf_img} alt="Cover" className="absolute left-auto opacity-30 z-1 "></img>
             </div>
 
             {/* Main content */}

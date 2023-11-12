@@ -5,9 +5,9 @@ const mariadb = require('mariadb')
 const config = require('./config.json')
 const cookieParser = require('cookie-parser')
 const expressSession = require('express-session')
-const {google} = require('googleapis')
+const { google } = require('googleapis')
 const crypto = require("crypto");
-const axios = require('axios') 
+const axios = require('axios')
 
 /*
     Create objects for libraries, configs,...
@@ -17,7 +17,7 @@ const port = 6767
 const oAuth2Client = new google.auth.OAuth2(
     config.client_id,
     config.client_secret,
-    "http://localhost:6767/steps"
+    "http://localhost:6767/api/v1/fitapi/redirect"
 )
 const pool = mariadb.createPool({
     host: 'localhost',
@@ -44,7 +44,7 @@ app.use(expressSession({
     secret: config.secret,
     resave: false,
     saveUninitialized: true,
-    cookie: {maxAge: 120000} // maxage in msec
+    cookie: { maxAge: 120000 } // maxage in msec
 }))
 
 /* Routes */
@@ -68,20 +68,18 @@ app.route('/api/v1/auth/signin')
             conn = await pool.getConnection()
             const rows = await conn.query("SELECT * FROM auth_info WHERE (username = ?) AND (pass = ?)", [username, password])
             console.log(rows)
-            if (rows.length == 1)
-            {
+            if (rows.length == 1) {
                 console.log("Signed in!")
-                res.status(200).json({status: true})
+                res.status(200).json({ status: true })
                 session = req.session
                 session.username = username
                 session.password = password
                 console.log(req.session)
-            } else if (rows.length == 0)
-            {
+            } else if (rows.length == 0) {
                 console.log("There is no such of this username/password that matched with out database")
-                res.status(200).json({status: false})
+                res.status(200).json({ status: false })
             }
-        } catch(err) {
+        } catch (err) {
             console.log(err)
         } finally {
             if (conn) return conn.end()
@@ -95,32 +93,43 @@ app.route("/api/v1/getstatus")
             try {
                 conn = await pool.getConnection()
                 const rows = await conn.query("SELECT acc_name, strength, defense, agility, stamina FROM auth_info WHERE (username = ?) AND (pass = ?)", [session.username, session.password])
-                res.status(200).json({status: true, figures: rows[0]})
+                res.status(200).json({ status: true, figures: rows[0] })
             } catch (err) {
                 console.log(err)
             } finally {
                 if (conn) return conn.end()
             }
         } else
-            res.json({status: false})
+            res.json({ status: false })
     })
 
-app.route("/api/v1/fitapi")
+app.route("/api/v1/fitapi/geturl")
     .get((req, res) => {
         const url = oAuth2Client.generateAuthUrl({
             access_type: "offline",
             scope: scopes
         })
-        res.json({url})
+        res.json({ url })
     })
 
-app.route("/steps")
+app.route("/api/v1/fitapi/redirect")
     .get(async (req, res) => {
         const { code } = req.query
+        console.log(code)
         try {
             const { tokens } = await oAuth2Client.getToken(code)
             oAuth2Client.setCredentials(tokens)
+            console.log(tokens)
+            req.session.tokens = tokens
+            res.sendStatus(200)
+        } catch (e) {
+            console.error(e)
+        }
+    })
 
+app.route("/api/v1/fitapi/fetch")
+    .get(async (req, res) => {
+        try {
             const fitness = google.fitness({
                 version: "v1",
                 auth: oAuth2Client
@@ -142,7 +151,7 @@ app.route("/steps")
                             "dataTypeName": "com.google.step_count.delta"
                         }
                     ],
-                    bucketByTime: {durationMillis: duration},
+                    bucketByTime: { durationMillis: duration },
                     startTimeMillis,
                     endTimeMillis
                 }
@@ -158,6 +167,7 @@ app.route("/steps")
             }
 
             console.log("Fetched data from Fit API done!")
+            console.log(data)
             res.json(data)
         } catch (e) {
             console.error(e)
