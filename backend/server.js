@@ -3,14 +3,22 @@ const bodyParser = require('body-parser')
 const cors = require('cors')
 const mariadb = require('mariadb')
 const config = require('./config.json')
-//const multer = require('multer')
 const cookieParser = require('cookie-parser')
 const expressSession = require('express-session')
+const {google} = require('googleapis')
+const crypto = require("crypto");
+const axios = require('axios') 
 
-//const upload = multer() 
+/*
+    Create objects for libraries, configs,...
+*/
 const app = express()
 const port = 6767
-
+const oAuth2Client = new google.auth.OAuth2(
+    config.client_id,
+    config.client_secret,
+    "http://localhost:6767/steps"
+)
 const pool = mariadb.createPool({
     host: 'localhost',
     user: 'lonelywolf',
@@ -18,7 +26,16 @@ const pool = mariadb.createPool({
     database: 'lonelywolf_db',
     connectionLimit: 15
 })
+const scopes = [
+    "https://www.googleapis.com/auth/fitness.activity.read",
+    "https://www.googleapis.com/auth/fitness.activity.write",
+    "https://www.googleapis.com/auth/fitness.body.read",
+    "https://www.googleapis.com/auth/fitness.sleep.read",
+    "https://www.googleapis.com/auth/userinfo.profile"
+]
+let session
 
+/* Pipelines */
 app.use(bodyParser.json()) // for parsing application/json
 app.use(bodyParser.urlencoded({ extended: true })) // for parsing application/x-www-form-urlencoded
 app.use(cors())
@@ -30,8 +47,7 @@ app.use(expressSession({
     cookie: {maxAge: 120000} // maxage in msec
 }))
 
-let session
-
+/* Routes */
 app.get('/api/v1', (req, res) => {
     res.send("This is our API!")
 })
@@ -87,6 +103,65 @@ app.route("/api/v1/getstatus")
             }
         } else
             res.json({status: false})
+    })
+
+app.route("/api/v1/fitapi")
+    .get((req, res) => {
+        const url = oAuth2Client.generateAuthUrl({
+            access_type: "offline",
+            scope: scopes
+        })
+        res.json({url})
+    })
+
+app.route("/steps")
+    .get(async (req, res) => {
+        const { code } = req.query
+        try {
+            const { tokens } = await oAuth2Client.getToken(code)
+            oAuth2Client.setCredentials(tokens)
+
+            const fitness = google.fitness({
+                version: "v1",
+                auth: oAuth2Client
+            })
+
+            const aDayInMillis = 24 * 60 * 60 * 1000
+            const now = new Date()
+            const midnight = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 0, 0, 0)
+
+            const startTimeMillis = midnight.getTime()
+            const endTimeMillis = Date.now()
+            const duration = Date.now() - midnight.getTime()
+
+            const response = await fitness.users.dataset.aggregate({
+                userId: "me",
+                requestBody: {
+                    aggregateBy: [
+                        {
+                            "dataTypeName": "com.google.step_count.delta"
+                        }
+                    ],
+                    bucketByTime: {durationMillis: duration},
+                    startTimeMillis,
+                    endTimeMillis
+                }
+            })
+
+            const fitnessData = response.data.bucket
+            let data = {}
+
+            console.log(fitnessData)
+
+            for (let bucket_number = 0; bucket_number < fitnessData.length; bucket_number++) {
+                data[bucket_number] = fitnessData[bucket_number].dataset[0].point[0].value[0].intVal
+            }
+
+            console.log("Fetched data from Fit API done!")
+            res.json(data)
+        } catch (e) {
+            console.error(e)
+        }
     })
 
 app.listen(port, () => {
