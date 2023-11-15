@@ -1,6 +1,8 @@
-import { useState } from "react";
-import { Link, Navigate } from "react-router-dom";
+import { useState } from "react"
+import { Link, Navigate } from "react-router-dom"
 import axios from 'axios'
+
+import return_back from './img/left_arrow.png'
 
 function Login() {
     const [username, setUsername] = useState("")
@@ -37,20 +39,25 @@ function Login() {
 
     return (
         <div className="Login flex justify-center items-center w-full h-screen">
-            <div className="flex flex-col container justify-center items-center">
-                <form method="POST" className="flex flex-col w-1/3 h-1/2 p-12 text-slate-50 bg-gradient-to-r from-sky-900 to-indigo-900 rounded-lg">
-                    {(loginState === false) ? (<p className="text-slate-50">Something is wrong!</p>) : null}
-                    <Link to="/" className="relative text-sm decoration-dashed top-8 left-0">{"⇐"}</Link>
-                    <span className="text-2xl font-medium my-8 mx-auto">Sign in</span>
+            <div className="flex flex-col container justify-center items-center w-6/12 h-4/5">
+                <form method="POST" className="flex flex-col p-12 w-full h-full justify-center text-slate-50 bg-gradient-to-r from-sky-900 to-indigo-900 rounded-lg">
+                    <Link to="/" className="relative text-sm decoration-dashed left-0">
+                        <img src={return_back} className="w-6 h-6"></img>
+                    </Link>
+                    <span className="text-3xl font-medium my-20 mx-auto">Sign in</span>
 
+                    {(loginState === false) ? (<p className="flex text-slate-50 bg-red-700 rounded-lg px-2 py-3 border border-red-500">Something was wrong</p>) : null}
                     <span className="mt-8">Username</span>
-                    <input type="text" name="username" onChange={handleUsername} className="text-slate-900"></input>
+                    <input type="text" name="username" onChange={handleUsername} className="mt-3 text-slate-50 bg-transparent border p-1.5 rounded-lg"></input>
 
-                    <span className="mt-8">Password</span>
-                    <input type="password" name="password" onChange={handlePassword} className="text-slate-900"></input>
+                    <div className="flex justify-between mt-8">
+                        <span className="mt-2">Password</span>
+                        <Link to="forget-password" className="mt-2 text-sm flex items-end hover:underline hover:underline-offset-1">Forgot your password</Link>
+                    </div>
+                    <input type="password" name="password" onChange={handlePassword} className="mt-3 text-slate-50 bg-transparent border p-1.5 rounded-lg"></input>
 
                     <button type="submit" className="mt-12 bg-indigo-600 w-36 mx-auto py-2 rounded-full" onClick={handleSubmit}>Submit</button>
-                    <Link to="forget-password" className="mt-2 text-sm flex justify-end">Forgot your password...</Link>
+                    <Link to="/signup" className="mx-auto mt-6">Don't have an account! <b className="hover:underline hover:underline-offset-1">Sign up</b></Link>
                 </form>
                 {(loginState === true) ? <Navigate to="/game" replace={true}></Navigate> : null}
             </div>

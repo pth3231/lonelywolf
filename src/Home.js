@@ -3,7 +3,7 @@
     Author: Phan Thai Hoa
     Team: lonelywolf
     Date: 7/11/2023
-    Latest update: 10/11/2023
+    Latest update: 14/11/2023
 
     Description:
     This have 4 parts: navbar, header, main content and footer
@@ -11,6 +11,7 @@
 
 import { Link } from "react-router-dom";
 import wolf_img from "./img/wolf.png"
+import arrow_down from "./img/arrow-down.png"
 
 function Home() 
 {
@@ -38,14 +39,14 @@ function Home()
                 </div>
             </div>
             {/* Headers */}
-            <div className="flex w-full items-center bg-transparent justify-center relative bg-blue-950 bg-gradient-to-l from-sky-900 to-blue-950 ">
+            <div className="flex flex-col w-full h-max items-center bg-transparent justify-center relative bg-blue-950 bg-gradient-to-l from-sky-900 to-blue-950 ">
                 <div className="pb-68 py-72 px-4 flex flex-col container items-center z-21">
-                    <p className="my-3 text-6xl font-semibold text-slate-50">Gamify your fitness</p>
+                    <p className="my-3 text-8xl text-slate-50">Gamify your running</p>
                     <p className="my-3 text-2xl font-medium text-slate-50">for a better life!</p>
-                    <Link to="/game" className="mt-12 py-2 px-8 text-slate-50 bg-indigo-800 rounded-full hover:text-slate-200 hover:bg-indigo-600">Join us now!</Link>
                 </div>
-                
-                <img src={wolf_img} alt="Cover" className="absolute left-auto opacity-30 z-1 "></img>
+                <img src={wolf_img} alt="Cover" className="absolute left-auto top-auto opacity-30 z-1"></img>
+                <img src={arrow_down} alt="Down" className="mt-24 h-28 w-28"></img>
+                <div className="h-16 w-full"></div>
             </div>
 
             {/* Main content */}
@@ -65,13 +66,14 @@ function Home()
                 orem*asdasdasdasdsssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss
                 sssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss
                 orem*asdasdasdasdsssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss
-                sssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss</p>
-                orem*asdasdasdasdsssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss
                 sssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss
                 orem*asdasdasdasdsssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss
                 sssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss
                 orem*asdasdasdasdsssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss
                 sssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss
+                orem*asdasdasdasdsssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss
+                sssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss
+                </p>
             </div>
         </div>
     );

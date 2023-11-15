@@ -3,7 +3,7 @@
 	Author: Phan Thai Hoa
 	Team: lonelywolf
 	Date: 8/11/2023
-	Latest update: 10/11/2023
+	Latest update: 14/11/2023
 
 	Description:
 	This have 3 parts: navbar, stats and task panel
@@ -64,16 +64,22 @@ function Game() {
 	}
 	
 	async function handleRefresh() {
-		let steps = await axios.get("http://localhost:6767/api/v1/fitapi/fetch", {timeout: 2500})
-			.then(res => {
-				console.log(res.data)
-				return res.data
-			})
-			.catch((e) => {
-				console.error(e)
-			})
-
-		setStepsCount(steps[0])
+		setStepsCount(0)
+		try {
+			let steps = await axios.get("http://localhost:6767/api/v1/fitapi/fetch", {timeout: 5000})
+				.then(res => {
+					console.log(res.data)
+					return res.data
+				})
+				.catch((e) => {
+					console.error(e)
+				})
+	
+			setStepsCount(steps[0])
+		} catch (e) {
+			alert("Something was wrong! Remember to OAuth before Refresh")
+			console.error("Something went wrong when we are trying to fetch the data from Google Fit API. Maybe data from your phone has not been updated yet!")
+		}
 	}
 
 	useEffect(() => {
@@ -85,9 +91,9 @@ function Game() {
 	}
 
 	return (
-		<div className="Game">
+		<div className="Game flex">
 			{/* Stats div */}
-			<div className="flex flex-col justify-between absolute top-0 left-0 w-96 h-full px-6 py-16">
+			<div className="flex flex-col justify-between fixed w-96 h-full px-10 py-16">
 				<div className="flex flex-col w-full bg-slate-800 rounded-lg py-8 border border-slate-500">
 					<img className="px-16 py-16 text-slate-50" src={wolf_img} alt="Avatar" />
 					<span className="px-6 my-3 text-slate-50 font-medium text-xl">Welcome, {name}!</span>
@@ -95,9 +101,9 @@ function Game() {
 					<span className="px-10 mt-3 text-slate-50">Defense: {def}</span>
 					<span className="px-10 mt-3 text-slate-50">Agility: {agi}</span>
 					<span className="px-10 mt-3 text-slate-50">Stamina: {sta}</span>
-					<div className="flex ml-2 mr-6 mt-10 justify-around">
+					<div className="flex mt-10 justify-around">
 						<span className="text-slate-50 px-4 py-2 bg-gradient-to-l from-slate-600 to-sky-600 border rounded-lg border-slate-200">Steps: {stepsCount}</span>
-						<button className="text-slate-50" onClick={handleRefresh}>Refresh</button>
+						<button className="text-slate-50 border px-4 rounded-lg" onClick={handleRefresh}>Refresh</button>
 					</div>
 				</div>
 
@@ -107,24 +113,21 @@ function Game() {
 					<button className="text-slate-50 px-4" onClick={handleOAuth}>OAuth2</button>
 				</div>
 			</div>
-			<div className="w-full flex">
+			<div className="flex w-screen">
 				{/* A placeholder for Stats absolute */}
-				<div className="flex flex-col top-0 left-0 w-96 h-full px-6 py-8"></div>
+				<div className="flex flex-col w-96 h-full px-24 py-8 mr-9"></div>
 
 				{/* Task panel div */}
-				<div className="px-8 py-12 flex flex-col">
-					<p className="text-slate-50">
-						This is where contents will be re-rendered: {(menu === false) ? 'True' : 'False'}
-					</p>
+				<div className="flex w-full md:w-9/12 px-8 py-12 justify-center">
 					<Outlet />
 				</div>
 			</div>
 
 			{/* Navigation button */}
-			<button className="p-4 text-slate-50 absolute bottom-16 right-16 rounded-full bg-indigo-800" onClick={toggleMenu}>H3</button>
+			<button className="p-4 text-slate-50 fixed bottom-16 right-16 rounded-full bg-indigo-800" onClick={toggleMenu}>H3</button>
 			{
 				(menu === false) ? null : (
-					<div className="absolute flex flex-col bottom-32 right-32">
+					<div className="fixed flex flex-col bottom-32 right-32">
 						<Link to="/game/inventory" className="text-slate-50">Inventory</Link>
 						<Link to="/game/guild" className="text-slate-50">Guild</Link>
 						<Link to="/game/market" className="text-slate-50">Market</Link>

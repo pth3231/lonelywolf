@@ -4,6 +4,7 @@ import reportWebVitals from './reportWebVitals';
 import Home from './Home'
 import Game from './Game'
 import Login from './Login'
+import Signup from './Signup';
 import Guild from './components/Guild'
 import Inventory from './components/Inventory'
 import Quest from './components/Quest'
@@ -49,6 +50,10 @@ const router = createBrowserRouter([
   {
     path: "/login",
     element: <Login></Login>
+  },
+  {
+    path: "/signup",
+    element: <Signup></Signup>
   }
 ])
 
