@@ -126,7 +126,7 @@ app.route("/api/v1/getstatus")
                 conn = await pool.getConnection()
 
                 // Query status of character
-                const rows = await conn.query("SELECT acc_name, strength, defense, agility, stamina FROM auth_info WHERE (username = ?) AND (pass = ?)", [session.username, session.password])
+                const rows = await conn.query("SELECT acc_name, strength, defense, agility, stamina, coin FROM auth_info WHERE (username = ?) AND (pass = ?)", [session.username, session.password])
                 
                 // Send back an object
                 res.status(200).json({ status: true, figures: rows[0] })
