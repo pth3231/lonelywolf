@@ -1,7 +1,7 @@
-const { google } = require('googleapis')
 const express = require('express')
-let router = express.Router()
+const { google } = require('googleapis')
 const config = require('../../config.json')
+let router = express.Router()
 
 // Initialize OAuth2 Client, so that consent window can verify the authentication of Google account
 const oAuth2Client = new google.auth.OAuth2(

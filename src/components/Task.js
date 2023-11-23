@@ -9,7 +9,7 @@
     This have 1 main part: a division used to manage tasks
 */
 
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import Panel from "./Panel"
 
 export default function Task() {
@@ -19,6 +19,10 @@ export default function Task() {
     function handleTaskClick(e) {
         setPanel(panel => !panel)
     }
+
+    useEffect(() => {
+        
+    }, [])
 
     return (
         <>
@@ -44,9 +48,7 @@ export default function Task() {
                         </div>
                     </div>
                 </div>
-                {
-
-                }
+                
             </div>
         </>
     )

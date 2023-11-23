@@ -24,8 +24,8 @@ router.route('/signin')
         res.send("Okay, GOT!").status(200)
     })
     .post(async (req, res) => {
-        const username = req.body.data.user
-        const password = req.body.data.pass
+        const username = req.body.user
+        const password = req.body.pass
         console.log("Req data", req.body)
 
         let conn
@@ -37,7 +37,7 @@ router.route('/signin')
             const rows = await conn.query("SELECT acc_name, strength, defense, agility, stamina, coin FROM auth_info WHERE (username = ?) AND (pass = ?)", [username, password])
             console.log(rows)
 
-            const token = jwt.sign({ username: req.body.data.user }, config.secret, {expiresIn: '600s'}) 
+            const token = jwt.sign({ username: req.body.user }, config.secret, {expiresIn: '600s'}) 
             // If it does exist
             if (rows.length == 1) {
                 // Send a successful response for frontend

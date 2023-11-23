@@ -1,5 +1,32 @@
 {
     "secret": "09f26e402586e2faa8da4c98a35f1b20d6b033c6097befa8be3486a829587fe2f90a832bd3ff9d42710a4da095a2ce285b009f0c3730cd9b8e1af3eb84df6611",
     "client_id": "1059837665463-3c1k769uv4ct6muc8i0v3424saktcu9p.apps.googleusercontent.com",
-    "client_secret": "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"
+    "client_secret": "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",
+    "daily_step_tasks": [
+        {
+            "title": "Rookie Walker",
+            "desc": "Walk 2500 steps within a day.",
+            "steps_require": 2500
+        },
+        {
+            "title": "Beginner Walker",
+            "desc": "Walk 4000 steps within a day.",
+            "steps_require": 4000
+        },
+        {
+            "title": "Intermidiate Walker",
+            "desc": "Walk 7500 steps within a day.",
+            "steps_require": 7500
+        },
+        {
+            "title": "Be Active, mate!",
+            "desc": "Walk 10000 steps within a day!",
+            "steps_require": 10000
+        },
+        {
+            "title": "A Real Athelete Day!",
+            "desc": "Walk 15000 steps within a day!",
+            "steps_require": 15000
+        }
+    ]
 }

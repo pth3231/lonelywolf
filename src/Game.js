@@ -13,12 +13,13 @@
 */
 
 import axios from "axios";
+import Cookies from "universal-cookie";
 import React, { useState, useEffect } from "react";
 import { Link, Outlet, useNavigate } from "react-router-dom";
+
 import coin_img from './img/coin.png'
 import wolf_pixel from './img/wolf_pixel.png'
 import dragon_img from './img/dragon.png'
-import Cookies from "universal-cookie";
 
 function Game() {
 	const [name, setName] = useState("<anonymous>")
@@ -29,8 +30,9 @@ function Game() {
 	const [coin, setCoin] = useState(0)
 	const [menu, setMenu] = useState(false)
 	const [stepsCount, setStepsCount] = useState(-1)
-	const navigate = useNavigate()
 	const [counterObj, setCounterObj] = useState("")
+	
+	const navigate = useNavigate()
 	const cookies = new Cookies(null, {path: "/"})
 
 	async function getData() {

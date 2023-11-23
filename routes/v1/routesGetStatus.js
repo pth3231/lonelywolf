@@ -1,8 +1,9 @@
 const express = require('express')
 const mariadb = require('mariadb')
-let router = express.Router()
-const config = require('../config.json')
 const jwt = require('jsonwebtoken')
+const config = require('../config.json')
+
+let router = express.Router()
 
 // Create a Pool object to handling the connection establishment
 const pool = mariadb.createPool({

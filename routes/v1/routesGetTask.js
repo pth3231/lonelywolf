@@ -1,5 +1,6 @@
 const express = require('express')
 const mariadb = require('mariadb')
+
 let router = express.Router()
 
 // Create a Pool object to handling the connection establishment
