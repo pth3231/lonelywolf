@@ -15,9 +15,10 @@
 import axios from "axios";
 import React, { useState, useEffect } from "react";
 import { Link, Outlet, useNavigate } from "react-router-dom";
-import wolf_img from './img/wolf.png'
 import coin_img from './img/coin.png'
 import wolf_pixel from './img/wolf_pixel.png'
+import dragon_img from './img/dragon.png'
+import Cookies from "universal-cookie";
 
 function Game() {
 	const [name, setName] = useState("<anonymous>")
@@ -30,10 +31,12 @@ function Game() {
 	const [stepsCount, setStepsCount] = useState(-1)
 	const navigate = useNavigate()
 	const [counterObj, setCounterObj] = useState("")
+	const cookies = new Cookies(null, {path: "/"})
 
 	async function getData() {
 		try {
-			let char_data = await axios.get("http://localhost:6767/api/v1/getstatus", { timeout: 10000 })
+			console.log("Cookie: ", cookies.get('token'))
+			let char_data = await axios.post("http://localhost:6767/api/v1/getstatus", {token: cookies.get('token'), username: cookies.get('username')}, { timeout: 10000 })
 				.then(res => {
 					console.log(res.data)
 					return res.data
@@ -44,12 +47,12 @@ function Game() {
 
 			console.log(char_data)
 			if (char_data.status === true) {
-				setName(char_data.figures.acc_name)
-				setStr(char_data.figures.strength)
-				setDef(char_data.figures.defense)
-				setAgi(char_data.figures.agility)
-				setSta(char_data.figures.stamina)
-				setCoin(char_data.figures.coin)
+				setName(char_data.data.acc_name)
+				setStr(char_data.data.strength)
+				setDef(char_data.data.defense)
+				setAgi(char_data.data.agility)
+				setSta(char_data.data.stamina)
+				setCoin(char_data.data.coin)
 				try {
 					let ctr = await axios.get("http://localhost:6767/api/v1/fitapi/geturl")
 						.then(res => {
@@ -67,6 +70,7 @@ function Game() {
 				navigate("/login")
 			}
 		} catch (e) {
+			navigate("/login")
 			alert("There are errors occured during the getData() process")
 		}
 	}
@@ -107,7 +111,8 @@ function Game() {
 			{/* Stats div */}
 			<div className="flex flex-col justify-between fixed w-96 h-full px-10 py-16">
 				<div className="flex flex-col w-full bg-slate-800 rounded-lg py-8 shadow-2xl shadow-sky-900">
-					<img className="p-12 text-slate-50 " src={wolf_pixel} alt="Avatar" />
+					<img className="p-12 text-slate-50 " src={wolf_pixel} alt="Avatar"></img>
+					<img className="absolute w-20 right-20 top-72" src={dragon_img} alt="Pet"></img>
 					<span className="px-6 my-3 text-slate-50 font-medium text-xl">Welcome, {name}!</span>
 					<span className="px-10 mt-6 text-slate-50">Strength: {str}</span>
 					<span className="px-10 mt-3 text-slate-50">Defense: {def}</span>

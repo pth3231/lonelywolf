@@ -1,6 +1,7 @@
 import { useState } from "react"
 import { Link, Navigate } from "react-router-dom"
 import axios from 'axios'
+import Cookies from "universal-cookie"
 
 import return_back from './img/left_arrow.png'
 
@@ -8,7 +9,7 @@ function Login() {
     const [username, setUsername] = useState("")
     const [password, setPassword] = useState("")
     const [loginState, setLoginState] = useState(undefined)
-
+    const cookies = new Cookies(null, { path: '/' })
     function handleUsername(e) {
         setUsername(e.target.value)
         console.log(`Username: ${e.target.value}`)
@@ -25,12 +26,14 @@ function Login() {
             user: username,
             pass: password
         }
+        cookies.set('username', data.user)
 
         let st = await axios.post(`http://localhost:6767/api/v1/auth/signin`, {data}, {timeout: 5000})
             .then(res => {
                 console.log(res)
                 console.log(res.data)
-                console.log(res.data.status)
+                console.log(res.data.token)
+                cookies.set('token', res.data.token)
                 return res.data.status
             })
             .catch(err => {console.log("Failed to send!", err)})
