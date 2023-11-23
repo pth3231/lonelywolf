@@ -26,6 +26,6 @@ Still <i>undefined</i>, we are still maintaining and trying to bring this onto t
 - 14/11/2023 [MINOR]: Basic UI/UX design finished
 - 15/11/2023 [BIG]: Finished basic components in Backend
 - 16/11/2023 [BIG]: Finished Login
-- 17/11/2023 [IMPORTANT]: Pre-elimination round
+- 17/11/2023 [IMPORTANT]: Preliminary round
 - 19/11/2023 [MINOR]: Started improving UI/UX
-- 23/11/2023 [IMPORTANT]: 
+- 23/11/2023 [IMPORTANT]: Totally divided the back-end codebase into modules, with respect to MVC Architecture. Added Pets, characters, items and more.
