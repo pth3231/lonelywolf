@@ -38,7 +38,8 @@ or you can download the .ZIP package in this repository.
 - 9/11/2023  **[IMPORTANT]**: Changed idea to steps counter and started creating system allowing players to trade and compete
 - 14/11/2023 **[MINOR]**: Basic UI/UX design finished
 - 15/11/2023 **[BIG]**: Finished basic components in Backend
-- 16/11/2023 **[BIG]**: Finished Login
+- 16/11/2023 **[BIG]**: Finished Login mechanics
 - 17/11/2023 **[IMPORTANT]**: Preliminary round
 - 19/11/2023 **[MINOR]**: Started improving UI/UX
 - 23/11/2023 **[IMPORTANT]**: Totally divided the back-end codebase into modules, with respect to MVC Architecture. Added Pets, characters, items and more.
+- 23/11/2023 **[BIG]**: Finished Signup mechanics
