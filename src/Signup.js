@@ -31,7 +31,7 @@ export default function Signup() {
             nickname: nickname
         }
 
-        let login_state = await axios.post(`http://localhost:6767/api/v1/auth/signup`, data, {timeout: 5000})
+        let login_state = await axios.post(`https://lonelywolf-backend.vercel.app/api/v1/auth/signup`, data, {timeout: 5000})
             .then(res => {
                 console.log(res)
                 console.log(res.data)

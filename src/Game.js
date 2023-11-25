@@ -38,7 +38,7 @@ function Game() {
 	async function getData() {
 		try {
 			console.log("Cookie: ", cookies.get('token'))
-			let char_data = await axios.post("http://localhost:6767/api/v1/getstatus", {token: cookies.get('token'), username: cookies.get('username')}, { timeout: 10000 })
+			let char_data = await axios.post("https://lonelywolf-backend.vercel.app/api/v1/getstatus", {token: cookies.get('token'), username: cookies.get('username')}, { timeout: 10000 })
 				.then(res => {
 					console.log(res.data)
 					return res.data
@@ -56,7 +56,7 @@ function Game() {
 				setSta(char_data.data.stamina)
 				setCoin(char_data.data.coin)
 				try {
-					let ctr = await axios.get("http://localhost:6767/api/v1/fitapi/geturl")
+					let ctr = await axios.get("https://lonelywolf-backend.vercel.app/api/v1/fitapi/geturl")
 						.then(res => {
 							return res.data
 						})
@@ -84,7 +84,7 @@ function Game() {
 	async function handleRefresh() {
 		setStepsCount(0)
 		try {
-			let steps = await axios.get("http://localhost:6767/api/v1/fitapi/fetch", { timeout: 5000 })
+			let steps = await axios.get("https://lonelywolf-backend.vercel.app/api/v1/fitapi/fetch", { timeout: 5000 })
 				.then(res => {
 					console.log(res.data)
 					return res.data
