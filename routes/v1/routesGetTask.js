@@ -1,5 +1,10 @@
 const express = require('express')
 const mariadb = require('mariadb')
+const schedule = require('node-schedule')
+const task_list = require('./task_list.json').task_list
+
+let authenticateToken = require('../modules/authenticateToken')
+let randomBetween = require('../modules/randomBetween')
 
 let router = express.Router()
 
@@ -12,32 +17,49 @@ const pool = mariadb.createPool({
     connectionLimit: 15
 })
 
-// Get list of tasks
-function randomBetween(array) {
-    const randomizedIndex = Math.floor(Math.random() * (array.length))
-    return array[randomizedIndex]
-}
+// Pre-set value for randomedTask 
+let randomedTask = [
+    {
+        "id": "BT_01",
+        "title": "Newbie Runner!",
+        "desc": "Do at least 1000 steps",
+        "steps": 1000
+    },
+    {
+        "id": "IT_02",
+        "title": "Intermediate Runner!",
+        "desc": "Do at least 10000 steps",
+        "steps": 10000
+    },
+    {
+        "id": "AT_01",
+        "title": "If you can do it, just do it!",
+        "desc": "Do at least 15000 steps",
+        "steps": 15000
+    }
+]
+schedule.scheduleJob('0 0 0 * * *', function() {
+    // Generate a random item
+    randomedTask.pop()
+    randomedTask.pop()
+    randomedTask.pop()
+    randomedTask.push(randomBetween(task_list.beginner_tasks))
+    randomedTask.push(randomBetween(task_list.intermediate_tasks))
+    randomedTask.push(randomBetween(task_list.advanced_tasks))
+    // Print the item to the console
+    console.log(`[routesGetTask.js] The random item for today is: ${randomedTask}`);
+  });
 
-router.route('/gettask')
-    .get(async (req, res) => {
-        let conn
+router.post('/gettask', authenticateToken, async (req, res) => {
         try {
-            // Wait for the connection to be established
-            conn = await pool.getConnection()
-
-            const rows = await conn.query("SELECT title, `desc`, proc FROM tasks_detail WHERE (username = ?);", [session.username])
-            console.log(rows)
-            res.status(200).json(rows)
+            console.log(`[routesGetTask.js]: Username - ${req.body.username}`)
+            console.log(`[routesGetTask.js]: Got random tasks`)
+            console.log(randomedTask)
+            res.status(200).json({ random_task_list: randomedTask })
         } catch (e) {
             console.error("Failed during getting task!", e)
             res.send(500)
-        }
-
-        let randomedTask = []
-        for (let times = 0; times <= 3; times++) {
-            randomedTask.push(randomBetween(Task.daily_step_tasks))
-        }
-        console.log(randomedTask)
+        }        
     })
 
 module.exports = router

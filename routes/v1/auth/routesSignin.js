@@ -20,13 +20,13 @@ const pool = mariadb.createPool({
 // If it does, the server will send a cookie and init a new session to validate later 
 router.route('/signin')
     .get((req, res) => {
-        console.log("Got signin route!")
+        console.log(`[routesSignin.js]: Got signin route!`)
         res.send("Okay, GOT!").status(200)
     })
     .post(async (req, res) => {
         const username = req.body.user
         const password = req.body.pass
-        console.log("Req data", req.body)
+        console.log(`[routesSignin.js]: Request data ${req.body}`)
 
         let conn
         try {
@@ -35,9 +35,14 @@ router.route('/signin')
 
             // Query rows with the matching username and password
             const rows = await conn.query("SELECT acc_name, strength, defense, agility, stamina, coin FROM auth_info WHERE (username = ?) AND (pass = ?)", [username, password])
-            console.log(rows)
+            console.log(`[routesSignin.js]: ${rows}`)
 
-            const token = jwt.sign({ username: req.body.user }, config.secret, {expiresIn: '600s'}) 
+            const token = jwt.sign(
+                { username: req.body.user }, 
+                config.secret, 
+                { expiresIn: '600s' }
+            ) 
+
             // If it does exist
             if (rows.length == 1) {
                 // Send a successful response for frontend
@@ -55,15 +60,15 @@ router.route('/signin')
                     token: token
                 })
 
-                console.log("Signed in!")
+                console.log(`[routesSignin.js]: Signed in!`)
             } else if (rows.length == 0) {
-                console.log("There is no such of this username/password that matched with out database")
+                console.log(`[routesSignin.js]: There is no such of this username/password that matched with out database`)
 
                 // Send a no existing response
                 res.status(200).json({ status: false })
             }
         } catch (err) {
-            console.log(err)
+            console.log(`[routesSignin.js]: ${err}`)
         } finally {
             // End connection session if the conn is still running
             if (conn) return conn.end()

@@ -2,6 +2,7 @@ const express = require('express')
 const mariadb = require('mariadb')
 const jwt = require('jsonwebtoken')
 const config = require('../config.json')
+let authenticateToken = require('../modules/authenticateToken')
 
 let router = express.Router()
 
@@ -13,22 +14,6 @@ const pool = mariadb.createPool({
     database: 'lonelywolf_db',
     connectionLimit: 15
 })
-
-function authenticateToken(req, res, next) {
-    const authHeader = req.headers['authorization']
-    const token = req.body.token
-    console.log(token)
-
-    if (token == null) return res.sendStatus(401)
-
-    jwt.verify(token, config.secret, (err) => {
-        if (err) {
-            console.log(err)
-            return res.sendStatus(403)
-        }
-        next()
-    })
-}
 
 router.post("/getstatus", authenticateToken, async (req, res) => {
     let conn

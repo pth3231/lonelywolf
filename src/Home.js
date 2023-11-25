@@ -51,28 +51,8 @@ function Home()
 
             {/* Main content */}
             <div className="px-24 py-8 container flex flex-col relative">
-                <p className="text-slate-50">lorem*asdasdasdasdsssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss
-                ssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss
-                orem*asdasdasdasdsssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss
-                sssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss
-                orem*asdasdasdasdsssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss
-                sssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss
-                orem*asdasdasdasdsssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss
-                sssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss
-                orem*asdasdasdasdsssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss
-                sssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss
-                orem*asdasdasdasdsssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss
-                sssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss
-                orem*asdasdasdasdsssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss
-                sssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss
-                orem*asdasdasdasdsssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss
-                sssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss
-                orem*asdasdasdasdsssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss
-                sssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss
-                orem*asdasdasdasdsssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss
-                sssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss
-                orem*asdasdasdasdsssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss
-                sssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss
+                <p className="text-slate-50">
+                
                 </p>
             </div>
         </div>

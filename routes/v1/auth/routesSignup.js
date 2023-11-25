@@ -13,7 +13,9 @@ const pool = mariadb.createPool({
 
 router.route('/signup')
     .get((req, res) => {
-        res.status(200).json({ message: "This is sign up GET request!" })
+        res.status(200).json(
+            { message: "This is sign up GET request!" }
+        )
     })
     .post(async (req, res) => {
         const input_username = req.body.user
@@ -27,9 +29,10 @@ router.route('/signup')
 
             // Query rows with the matching username and password
             await conn.query("INSERT INTO auth_info SET username=?, pass=?, acc_name=?", [input_username, input_password, input_nickname])
+            console.log(`[routesSignup.js]: Signed up {username: ${input_username}, nickname: ${input_username} }`)
             res.json({status: true})
         } catch (err) {
-            console.log(err)
+            console.log(`[routesSignup.js]: ${err}`)
             res.json({status: false})
         } finally {
             // End connection session if the conn is still running
