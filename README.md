@@ -1,12 +1,5 @@
 <h1 style="display: flex; flex-direction: column; align-items: center;">Welcome, lonelywolf!</h1>
 
-## Author
-
-- Phan Thai Hoa (Developer, Engineer)
-- Nguyen Quang Minh (Leader, Content Manager)
-- Nguyen Ngoc Gia Bao (Designer)
-- Pham Ngoc (Designer)
-
 ## Setup
 
 First, if you are a developer or a user who want to investigate about our web application, you have to install <a href="https://nodejs.org/en">Node.js</a> runtime on your machine.
@@ -62,18 +55,9 @@ node server.js
 - MariaDB
 - TailwindCSS
 
-## Start
+## Author
 
-6/11/2023
-
-## Patch notes
-
-- 6/11/2023  **[BIG]**: Firstly came up with a bicycle with electric generator, which use special counter to rank player
-- 9/11/2023  **[IMPORTANT]**: Changed idea to steps counter and started creating system allowing players to trade and compete
-- 14/11/2023 **[MINOR]**: Basic UI/UX design finished
-- 15/11/2023 **[BIG]**: Finished basic components in Backend
-- 16/11/2023 **[BIG]**: Finished Login mechanics
-- 17/11/2023 **[IMPORTANT]**: Preliminary round
-- 19/11/2023 **[MINOR]**: Started improving UI/UX
-- 23/11/2023 **[IMPORTANT]**: Totally divided the back-end codebase into modules, with respect to MVC Architecture. Added Pets, characters, items and more.
-- 23/11/2023 **[BIG]**: Finished Signup mechanics
+- Phan Thai Hoa (Developer, Engineer)
+- Nguyen Quang Minh (Leader, Content Manager)
+- Nguyen Ngoc Gia Bao (Designer)
+- Pham Ngoc (Designer)
