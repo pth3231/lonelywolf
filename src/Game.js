@@ -29,6 +29,7 @@ function Game() {
 	const [sta, setSta] = useState(0)
 	const [coin, setCoin] = useState(0)
 	const [menu, setMenu] = useState(false)
+	const [petPanel, setPetPanel] = useState(false)
 	const [stepsCount, setStepsCount] = useState(-1)
 	const [counterObj, setCounterObj] = useState("")
 	
@@ -38,7 +39,7 @@ function Game() {
 	async function getData() {
 		try {
 			console.log("Cookie: ", cookies.get('token'))
-			let char_data = await axios.post("https://lonelywolf-backend.vercel.app/api/v1/getstatus", {token: cookies.get('token'), username: cookies.get('username')}, { timeout: 10000 })
+			let char_data = await axios.post("http://localhost:6767/api/v1/getstatus", {token: cookies.get('token'), username: cookies.get('username')}, { timeout: 10000 })
 				.then(res => {
 					console.log(res.data)
 					return res.data
@@ -49,14 +50,14 @@ function Game() {
 
 			console.log(char_data)
 			if (char_data.status === true) {
-				setName(char_data.data.acc_name)
+				setName(char_data.data.name)
 				setStr(char_data.data.strength)
 				setDef(char_data.data.defense)
 				setAgi(char_data.data.agility)
 				setSta(char_data.data.stamina)
 				setCoin(char_data.data.coin)
 				try {
-					let ctr = await axios.get("https://lonelywolf-backend.vercel.app/api/v1/fitapi/geturl")
+					let ctr = await axios.get("http://localhost:6767/api/v1/fitapi/geturl")
 						.then(res => {
 							return res.data
 						})
@@ -84,7 +85,7 @@ function Game() {
 	async function handleRefresh() {
 		setStepsCount(0)
 		try {
-			let steps = await axios.get("https://lonelywolf-backend.vercel.app/api/v1/fitapi/fetch", { timeout: 5000 })
+			let steps = await axios.get("http://localhost:6767/api/v1/fitapi/fetch", { timeout: 5000 })
 				.then(res => {
 					console.log(res.data)
 					return res.data
@@ -108,13 +109,17 @@ function Game() {
 		setMenu(menu => !menu)
 	}
 
+	function switchPet(e) {
+		setPetPanel(petPanel => !petPanel)
+	}
+
 	return (
 		<div className="Game flex">
 			{/* Stats div */}
 			<div className="flex flex-col justify-between fixed w-96 h-full px-10 py-16">
 				<div className="flex flex-col w-full bg-slate-800 rounded-lg py-8 shadow-2xl shadow-sky-900">
 					<img className="p-12 text-slate-50 " src={wolf_pixel} alt="Avatar"></img>
-					<img className="absolute w-20 right-20 top-72" src={dragon_img} alt="Pet"></img>
+					<img className="absolute w-20 right-20 top-72" src={dragon_img} alt="Pet" onClick={switchPet}></img>
 					<span className="px-6 my-3 text-slate-50 font-medium text-xl">Welcome, {name}!</span>
 					<span className="px-10 mt-6 text-slate-50">Strength: {str}</span>
 					<span className="px-10 mt-3 text-slate-50">Defense: {def}</span>
@@ -157,6 +162,14 @@ function Game() {
 						<Link to="/" className="text-slate-50 py-3 px-6 duration-200 hover:pl-7 hover:bg-slate-600/30">Home</Link>
 					</div>
 				)
+			}
+			{
+				(petPanel) 
+				? <div className="flex flex-col bg-slate-50/50 absolute w-screen h-screen">
+					<p className="text-slate-50" onClick={switchPet}>x</p>
+					<p className="text-slate-50">Pet Panel</p>
+				</div> 
+				: null
 			}
 		</div>
 	);
