@@ -31,7 +31,7 @@ export default function Task() {
         console.log(auth_info.token)
         console.log(auth_info.username)
         try {
-            let task_list = await axios.post("https://lonelywolf-backend.vercel.app/api/v1/gettask", auth_info, { timeout: 7000 })
+            let task_list = await axios.post("http://localhost:6767/api/v1/gettask", auth_info, { timeout: 7000 })
                 .then(res => {
                     console.log(res.data.random_task_list)
                     return res.data.random_task_list

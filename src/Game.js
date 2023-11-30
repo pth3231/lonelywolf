@@ -39,7 +39,7 @@ function Game() {
 	async function getData() {
 		try {
 			console.log("Cookie: ", cookies.get('token'))
-			let char_data = await axios.post("https://lonelywolf-backend.vercel.app/api/v1/getstatus", {token: cookies.get('token'), username: cookies.get('username')}, { timeout: 10000 })
+			let char_data = await axios.post("http://localhost:6767/api/v1/getstatus", {token: cookies.get('token'), username: cookies.get('username')}, { timeout: 10000 })
 				.then(res => {
 					console.log(res.data)
 					return res.data
@@ -50,14 +50,14 @@ function Game() {
 
 			console.log(char_data)
 			if (char_data.status === true) {
-				setName(char_data.data.name)
-				setStr(char_data.data.strength)
-				setDef(char_data.data.defense)
-				setAgi(char_data.data.agility)
-				setSta(char_data.data.stamina)
+				setName(cookies.get('username'))
+				setStr(char_data.data.atk)
+				setDef(char_data.data.def)
+				setAgi(char_data.data.agi)
+				setSta(char_data.data.sta)
 				setCoin(char_data.data.coin)
 				try {
-					let ctr = await axios.get("https://lonelywolf-backend.vercel.app/api/v1/fitapi/geturl")
+					let ctr = await axios.get("http://localhost:6767/api/v1/fitapi/geturl")
 						.then(res => {
 							return res.data
 						})
@@ -77,33 +77,35 @@ function Game() {
 			alert("There are errors occured during the getData() process")
 		}
 	}
-
-	function handleOAuth() {
-		window.open(counterObj.url, "_blank")
-	}
-
-	async function handleRefresh() {
-		setStepsCount(0)
-		try {
-			let steps = await axios.get("https://lonelywolf-backend.vercel.app/api/v1/fitapi/fetch", { timeout: 5000 })
-				.then(res => {
-					console.log(res.data)
-					return res.data
-				})
-				.catch((e) => {
-					console.error(e)
-				})
-
-			setStepsCount(steps[0])
-		} catch (e) {
-			alert("Something was wrong! Remember to OAuth before Refresh")
-			console.error("Something went wrong when we are trying to fetch the data from Google Fit API. Maybe data from your phone has not been updated yet!")
-		}
-	}
-
+	
 	useEffect(() => {
 		getData()
 	}, [])
+
+	function handleRefresh() {
+		let fetch_fit = async () =>
+		{
+			try {
+				let steps = await axios.get("http://localhost:6767/api/v1/fitapi/fetch")
+					.then(res => {
+						console.log(res.data)
+						return res.data
+					})
+					.catch((e) => {
+						console.error(e)
+					})
+	
+				setStepsCount(steps[0])
+			} catch (e) {
+				alert("Something was wrong! Remember to OAuth before Refresh")
+				console.error("Something went wrong when we are trying to fetch the data from Google Fit API. Maybe data from your phone has not been updated yet!")
+			}
+		}
+
+		window.open(counterObj.url, "_blank")
+		setStepsCount(0)
+		fetch_fit()
+	}
 
 	function toggleMenu() {
 		setMenu(menu => !menu)
@@ -132,7 +134,6 @@ function Game() {
 				</div>
 
 				<div className="flex w-full bg-slate-800 rounded-lg p-3 align-right shadow-2xl shadow-sky-700">
-					<button className="text-slate-50 px-4" onClick={handleOAuth}>OAuth2</button>
 					<div className="flex items-center">
 						<span className="text-slate-50">{coin}</span>
 						<img src={coin_img} className="w-5 h-5 ml-2"/>
@@ -165,9 +166,11 @@ function Game() {
 			}
 			{
 				(petPanel) 
-				? <div className="flex flex-col bg-slate-50/50 absolute w-screen h-screen">
-					<p className="text-slate-50" onClick={switchPet}>x</p>
-					<p className="text-slate-50">Pet Panel</p>
+				? <div className="flex flex-col bg-transparent fixed w-screen h-screen">
+					<div className="flex flex-col justify-center items-center w-96 h-96">
+						<p className="text-slate-50" onClick={switchPet}>x</p>
+						<p className="text-slate-50">Pet Panel</p>
+					</div>
 				</div> 
 				: null
 			}
