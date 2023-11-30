@@ -20,6 +20,7 @@ import { Link, Outlet, useNavigate } from "react-router-dom";
 import coin_img from './img/coin.png'
 import wolf_pixel from './img/wolf_pixel.png'
 import dragon_img from './img/dragon.png'
+import config from './config.json'
 
 function Game() {
 	const [name, setName] = useState("<anonymous>")
@@ -39,7 +40,7 @@ function Game() {
 	async function getData() {
 		try {
 			console.log("Cookie: ", cookies.get('token'))
-			let char_data = await axios.post("http://localhost:6767/api/v1/getstatus", {token: cookies.get('token'), username: cookies.get('username')}, { timeout: 10000 })
+			let char_data = await axios.post(`${config.api_url}/api/v1/getstatus`, {token: cookies.get('token'), username: cookies.get('username')}, { timeout: 10000 })
 				.then(res => {
 					console.log(res.data)
 					return res.data
@@ -57,7 +58,7 @@ function Game() {
 				setSta(char_data.data.sta)
 				setCoin(char_data.data.coin)
 				try {
-					let ctr = await axios.get("http://localhost:6767/api/v1/fitapi/geturl")
+					let ctr = await axios.get(`${config.api_url}/api/v1/fitapi/geturl`)
 						.then(res => {
 							return res.data
 						})
@@ -86,7 +87,7 @@ function Game() {
 		let fetch_fit = async () =>
 		{
 			try {
-				let steps = await axios.get("http://localhost:6767/api/v1/fitapi/fetch")
+				let steps = await axios.get(`${config.api_url}/api/v1/fitapi/fetch`)
 					.then(res => {
 						console.log(res.data)
 						return res.data

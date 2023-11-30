@@ -1,9 +1,10 @@
-import { useState } from "react"
 import axios from "axios"
+import { useState } from "react"
 import Cookies from "universal-cookie"
 import { Link, Navigate } from "react-router-dom"
 
 import return_back from './img/left_arrow.png'
+import config from './config.json'
 
 function Login() {
     const [username, setUsername] = useState("")

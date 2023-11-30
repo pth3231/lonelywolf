@@ -12,6 +12,7 @@
 import { useEffect, useState } from "react"
 import axios from "axios"
 import Cookies from "universal-cookie"
+import config from '../config.json'
 
 export default function Task() {
     const [isAvailable, setIsAvailable] = useState(true)
@@ -31,7 +32,7 @@ export default function Task() {
         console.log(auth_info.token)
         console.log(auth_info.username)
         try {
-            let task_list = await axios.post("http://localhost:6767/api/v1/gettask", auth_info, { timeout: 7000 })
+            let task_list = await axios.post(`${config.api_url}/api/v1/gettask`, auth_info, { timeout: 10000 })
                 .then(res => {
                     console.log(res.data.random_task_list)
                     return res.data.random_task_list

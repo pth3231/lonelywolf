@@ -1,6 +1,7 @@
 import { useState } from "react"
 import { Link, Navigate } from "react-router-dom"
 import axios from 'axios'
+import config from './config.json'
 
 export default function Signup() {
     const [username, setUsername] = useState("")
@@ -31,7 +32,7 @@ export default function Signup() {
             nickname: nickname
         }
 
-        let login_state = await axios.post(`http://localhost:6767/api/v1/auth/signup`, data, {timeout: 5000})
+        let login_state = await axios.post(`${config.api_url}/api/v1/auth/signup`, data, {timeout: 5000})
             .then(res => {
                 console.log(res)
                 console.log(res.data)
