@@ -31,7 +31,7 @@ function Login() {
         }
         cookies.set('username', data.user)
 
-        let login_state = await axios.post(`http://localhost:6767/api/v1/auth/signin`, data, {timeout: 5000})
+        let login_state = await axios.post(`http://localhost:6767/api/v1/auth/signin`, data, {timeout: 14000})
             .then(res => {
                 console.log(res)
                 console.log(res.data)

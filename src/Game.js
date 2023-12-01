@@ -22,6 +22,62 @@ import wolf_pixel from './img/wolf_pixel.png'
 import dragon_img from './img/dragon.png'
 import config from './config.json'
 
+
+// I know there are more elegant ways to do this, but at this time I am going to do this temporarily 
+import pet1 from './img/pet/pet1.png'
+import pet2 from './img/pet/pet2.png'
+import pet3 from './img/pet/pet3.png'
+import pet4 from './img/pet/pet4.png'
+import pet5 from './img/pet/pet5.png'
+import pet6 from './img/pet/pet6.png'
+import pet7 from './img/pet/pet7.png'
+import pet8 from './img/pet/pet8.png'
+import pet9 from './img/pet/pet9.png'
+import pet10 from './img/pet/pet10.png'
+
+const pet_list = [
+	{
+		id: 1, 
+		path: pet1
+	},
+	{
+		id:2, 
+		path: pet2
+	},
+	{
+		id:3, 
+		path: pet3
+	},
+	{
+		id:4, 
+		path: pet4
+	},
+	{
+		id:5, 
+		path: pet5
+	},
+	{
+		id:6, 
+		path: pet6
+	},
+	{
+		id:7, 
+		path: pet7
+	},
+	{
+		id:8, 
+		path: pet8
+	},
+	{
+		id:9, 
+		path: pet9
+	},
+	{
+		id:10, 
+		path: pet10
+	}
+]
+
 function Game() {
 	const [name, setName] = useState("<anonymous>")
 	const [str, setStr] = useState(0)
@@ -87,7 +143,7 @@ function Game() {
 		let fetch_fit = async () =>
 		{
 			try {
-				let steps = await axios.get(`${config.api_url}/api/v1/fitapi/fetch`)
+				let steps = await axios.get(`${config.api_url}/api/v1/fitapi/fetch`, {timeout: 15000})
 					.then(res => {
 						console.log(res.data)
 						return res.data
@@ -103,9 +159,10 @@ function Game() {
 			}
 		}
 
-		window.open(counterObj.url, "_blank")
+		let consentScreen = window.open(counterObj.url, "_blank", "popup=true,width=400,height=500")
 		setStepsCount(0)
-		fetch_fit()
+		if (consentScreen) 
+			fetch_fit()
 	}
 
 	function toggleMenu() {
@@ -167,12 +224,19 @@ function Game() {
 			}
 			{
 				(petPanel) 
-				? <div className="flex flex-col bg-transparent fixed w-screen h-screen">
-					<div className="flex flex-col justify-center items-center w-96 h-96">
+				? <div className="flex flex-col justify-center items-center bg-slate-900/20 fixed w-screen h-screen">
+					<div className="flex flex-col bg-slate-700/50 w-96 h-96 rounded-lg p-6">
 						<p className="text-slate-50" onClick={switchPet}>x</p>
-						<p className="text-slate-50">Pet Panel</p>
+						<p className="text-slate-50">Change Pet</p>
+						<div className="flex overscroll-none">
+							{ pet_list.map(img_obj => 
+								<div className="w-16 h-16" key={img_obj.id}>
+									<img src={img_obj.path} alt={`Img ${img_obj.id}`}></img>
+								</div>
+							) }
+						</div>
 					</div>
-				</div> 
+				</div>
 				: null
 			}
 		</div>

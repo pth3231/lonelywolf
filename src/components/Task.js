@@ -61,7 +61,7 @@ export default function Task() {
                 There are thousands of tasks, challenges and treasures are waiting for you to achieve! Let's finish them all!
             </p>
             {
-                (isAvailable === true) ? dailyTask.map(item =>
+                (isAvailable === true && dailyTask.length !== 0) ? dailyTask.map(item =>
                     <div className="mt-2 flex flex-wrap" key={item.id}>
                         <div onClick={handleTaskClick} className="px-8 py-8 bg-slate-800/80 justify-center rounded-lg shadow-lg cursor shadow-slate-500/40 mt-4 border border-slate-800/80 duration-200 hover:border-slate-500">
                             <p className="text-slate-50 text-xl font-semibold">{item.title}</p>
