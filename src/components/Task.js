@@ -13,11 +13,14 @@ import { useEffect, useState } from "react"
 import axios from "axios"
 import Cookies from "universal-cookie"
 import config from '../config.json'
+import { useGlobalStorage } from "../state/globalStorage"
 
 export default function Task() {
     const [isAvailable, setIsAvailable] = useState(true)
     const [panel, setPanel] = useState(false)
     const [dailyTask, setDailyTask] = useState([])
+    const steps_archieved = useGlobalStorage((state) => state.steps)
+
     const cookies = new Cookies(null, { path: '/' })
 
     function handleTaskClick(e) {
@@ -55,7 +58,7 @@ export default function Task() {
     }, [])
 
     return (
-        <div className="container">
+        <div className="h-full w-full">
             <p className="text-4xl font-semibold text-slate-50">Task</p>
             <p className="text-slate-50 text-md mt-2">
                 There are thousands of tasks, challenges and treasures are waiting for you to achieve! Let's finish them all!
@@ -66,10 +69,16 @@ export default function Task() {
                         <div onClick={handleTaskClick} className="px-8 py-8 bg-slate-800/80 justify-center rounded-lg shadow-lg cursor shadow-slate-500/40 mt-4 border border-slate-800/80 duration-200 hover:border-slate-500">
                             <p className="text-slate-50 text-xl font-semibold">{item.title}</p>
                             <p className="flex mt-4 w-48 flex-wrap text-slate-50 text-sm">{item.desc}</p>
-                            <p className="flex justify-end text-slate-50 text-sm mt-4">Process: {50}%</p>
-                            <div className="w-full flex border-slate-50 rounded-md mt-2">
-                                <div className="w-1/2 h-1 bg-gradient-to-r from-slate-700 to-sky-700 border-r-2"></div>
-                                <div className="w-1/2 h-1 bg-slate-700"></div>
+                            <p className="flex justify-end text-slate-50 text-sm mt-4">
+                                Process: {((steps_archieved / item.steps * 100) > 100) ? 100 : (steps_archieved / item.steps * 100).toPrecision(4)}%
+                            </p>
+                            
+                            <div className="flex h-2 mt-4 bg-slate-600 rounded-lg">
+                                <div className="bg-gradient-to-r from-slate-500 to-sky-600 rounded-lg" 
+                                    style={{
+                                        width: `${((steps_archieved / item.steps * 100) > 100) ? 100 : (steps_archieved / item.steps * 100)}%` 
+                                    }}>
+                                </div>
                             </div>
                         </div>
                     </div>

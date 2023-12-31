@@ -1,7 +1,7 @@
 import axios from "axios"
 import { useState } from "react"
 import Cookies from "universal-cookie"
-import { Link, Navigate } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 
 import return_back from './img/left_arrow.png'
 import config from './config.json'
@@ -12,6 +12,7 @@ function Login() {
     const [loginState, setLoginState] = useState(undefined)
 
     const cookies = new Cookies(null, { path: '/' })
+    const navigate = useNavigate()
 
     function handleUsername(e) {
         setUsername(e.target.value)
@@ -23,7 +24,7 @@ function Login() {
         console.log(`Password: ${e.target.value}`)
     }
 
-    async function handleSubmit(e) {
+    function handleSubmit(e) {
         e.preventDefault()
         const data = {
             user: username,
@@ -31,22 +32,22 @@ function Login() {
         }
         cookies.set('username', data.user)
 
-        let login_state = await axios.post(`http://localhost:6767/api/v1/auth/signin`, data, {timeout: 14000})
+        axios.post(`http://localhost:6767/api/v1/auth/signin`, data, { timeout: 14000 })
             .then(res => {
-                console.log(res)
                 console.log(res.data)
-                console.log(res.data.token)
                 cookies.set('token', res.data.token)
-                return res.data.status
+                
+                if (res.data.status === true) {
+                    navigate("/game")
+                }
             })
             .catch(err => {
                 console.log("Failed to send!", err)
             })
-        setLoginState(login_state)
     }
 
     return (
-        <div className="Login flex justify-center items-center w-full h-screen">
+        <div className="Login flex justify-center items-center w-full h-screen dark:bg-slate-800">
             <div className="flex flex-col container justify-center items-center w-6/12">
                 <form method="POST" className="flex flex-col px-12 py-24 lg:w-5/6 xl:2/3 md:w-full h-full justify-center text-slate-50 bg-gradient-to-r from-sky-900 to-indigo-900 rounded-lg">
                     <Link to="/" className="relative text-sm decoration-dashed left-0">
@@ -67,7 +68,6 @@ function Login() {
                     <button type="submit" className="mt-12 bg-indigo-600 w-36 mx-auto py-2 rounded-full" onClick={handleSubmit}>Submit</button>
                     <Link to="/signup" className="mx-auto mt-6">Don't have an account! <b className="hover:underline hover:underline-offset-1">Sign up</b></Link>
                 </form>
-                {(loginState === true) ? <Navigate to="/game" replace={true}></Navigate> : null}
             </div>
         </div>
     );

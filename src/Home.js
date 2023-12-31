@@ -16,7 +16,7 @@ import arrow_down from "./img/arrow-down.png"
 function Home() 
 {
     return (
-        <div className="Home">
+        <div className="Home dark:bg-slate-800">
             {/* Navbar */}
             <div className="flex flex-col header w-full items-center bg-transparent justify-center absolute top-0 left-0 z-40">
                 <div className="px-24 w-full container flex justify-between">
