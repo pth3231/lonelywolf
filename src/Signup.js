@@ -1,5 +1,5 @@
 import { useState } from "react"
-import { Link, Navigate } from "react-router-dom"
+import { Link } from "react-router-dom"
 import axios from 'axios'
 import config from './config.json'
 
@@ -7,7 +7,7 @@ export default function Signup() {
     const [username, setUsername] = useState("")
     const [password, setPassword] = useState("")
     const [nickname, setNickname] = useState("")
-    const [loginState, setLoginState] = useState(undefined)
+    const [signupState, setSignupState] = useState(undefined)
 
     function handleUsername(e) {
         setUsername(e.target.value)
@@ -32,12 +32,12 @@ export default function Signup() {
             nickname: nickname
         }
 
-        let login_state = await axios.post(`${config.api_url}/api/v1/auth/signup`, data, {timeout: 5000})
+        axios.post(`${config.api_url}/api/v1/auth/signup`, data, {timeout: 10000})
             .then(res => {
                 console.log(res)
                 console.log(res.data)
                 console.log(res.data.token)
-                return res.data.status
+                setSignupState(res.data.status)
             })
             .catch(err => {
                 console.log("Failed to send!", err)
@@ -49,8 +49,9 @@ export default function Signup() {
                 <div className="flex flex-col container justify-center items-center w-6/12">
                     <form method="POST" className="flex flex-col px-12 py-20 lg:w-5/6 xl:2/3 md:w-full h-full justify-center text-slate-50 bg-gradient-to-r from-sky-900 to-indigo-900 rounded-lg">
                         <span className="text-3xl font-medium my-20 mx-auto">Sign up</span>
+                        
+                        {(signupState === false) ? (<p className="flex text-slate-50 bg-red-700 rounded-lg px-2 py-3 border border-red-500">Something was wrong!</p>) : null}
 
-                        {(loginState === false) ? (<p className="flex text-slate-50 bg-red-700 rounded-lg px-2 py-3 border border-red-500">Something was wrong!</p>) : null}
                         <span className="mt-12">Nickname</span>
                         <input type="text" name="nickname" onChange={handleNickname} className="mt-3 text-slate-50 bg-opacity-10 bg-slate-50 border p-1.5 rounded-lg"></input>
 

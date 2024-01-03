@@ -17,13 +17,16 @@ import Inventory from './components/Inventory'
 import Quest from './components/Quest'
 import Task from './components/Task'
 import Market from './components/Market'
+import ChartLayer from './components/ChartLayer'
+import Error from './Error';
 
 import reportWebVitals from './reportWebVitals';
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <Home></Home>
+    element: <Home></Home>,
+    errorElement: <Error></Error>
   },
   {
     path: "/game",
@@ -32,33 +35,46 @@ const router = createBrowserRouter([
       {
         path: "",
         element: <Task></Task>,
-        index: true
+        index: true,
+        errorElement: <Error></Error>
       },
       {
         path: "guild",
-        element: <Guild></Guild>
+        element: <Guild></Guild>,
+        errorElement: <Error></Error>
       },
       {
         path: "inventory",
-        element: <Inventory></Inventory>
+        element: <Inventory></Inventory>,
+        errorElement: <Error></Error>
       },
       {
         path: "quest",
-        element: <Quest></Quest>
+        element: <Quest></Quest>,
+        errorElement: <Error></Error>
       },
       {
         path: "market",
-        element: <Market></Market>
+        element: <Market></Market>,
+        errorElement: <Error></Error>
+      },
+      {
+        path: "chart",
+        element: <ChartLayer></ChartLayer>,
+        errorElement: <Error></Error>
       }
-    ]
+    ],
+    errorElement: <Error></Error>
   },
   {
     path: "/login",
-    element: <Login></Login>
+    element: <Login></Login>,
+    errorElement: <Error></Error>
   },
   {
     path: "/signup",
-    element: <Signup></Signup>
+    element: <Signup></Signup>,
+    errorElement: <Error></Error>
   }
 ])
 

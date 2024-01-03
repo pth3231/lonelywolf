@@ -26,17 +26,18 @@ function Login() {
 
     function handleSubmit(e) {
         e.preventDefault()
+        setLoginState(undefined)
         const data = {
             user: username,
             pass: password
         }
         cookies.set('username', data.user)
 
-        axios.post(`http://localhost:6767/api/v1/auth/signin`, data, { timeout: 14000 })
+        axios.post(`${config.api_url}/api/v1/auth/signin`, data, { timeout: 14000 })
             .then(res => {
                 console.log(res.data)
                 cookies.set('token', res.data.token)
-                
+                setLoginState(res.data.status)
                 if (res.data.status === true) {
                     navigate("/game")
                 }
@@ -51,7 +52,7 @@ function Login() {
             <div className="flex flex-col container justify-center items-center w-6/12">
                 <form method="POST" className="flex flex-col px-12 py-24 lg:w-5/6 xl:2/3 md:w-full h-full justify-center text-slate-50 bg-gradient-to-r from-sky-900 to-indigo-900 rounded-lg">
                     <Link to="/" className="relative text-sm decoration-dashed left-0">
-                        <img src={return_back} className="w-6 h-6"></img>
+                        <img src={return_back} alt="Return back" className="w-6 h-6"></img>
                     </Link>
                     <span className="text-3xl font-medium my-20 mx-auto">Sign in</span>
 
