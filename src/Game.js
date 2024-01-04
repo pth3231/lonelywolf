@@ -36,6 +36,17 @@ import pet8 from './img/pet/pet8.png'
 import pet9 from './img/pet/pet9.png'
 import pet10 from './img/pet/pet10.png'
 
+import char1 from './img/char/anonymous.png'
+import char2 from './img/char/assasin.png'
+import char3 from './img/char/dwarf.png'
+import char4 from './img/char/elf.png'
+import char5 from './img/char/hunter.png'
+import char6 from './img/char/lonelywolf.png'
+import char7 from './img/char/man_villager.png'
+import char8 from './img/char/vampire.png'
+import char9 from './img/char/witch.png'
+import char10 from './img/char/women_villager.png'
+
 import background_sound from './sound/background_sound.mp3'
 
 const pet_list = [
@@ -81,6 +92,49 @@ const pet_list = [
   }
 ]
 
+const char_list = [
+  {
+    id: 1,
+    path: char1
+  },
+  {
+    id: 2,
+    path: char2
+  },
+  {
+    id: 3,
+    path: char3
+  },
+  {
+    id: 4,
+    path: char4
+  },
+  {
+    id: 5,
+    path: char5
+  },
+  {
+    id: 6,
+    path: char6
+  },
+  {
+    id: 7,
+    path: char7
+  },
+  {
+    id: 8,
+    path: char8
+  },
+  {
+    id: 9,
+    path: char9
+  },
+  {
+    id: 10,
+    path: char10
+  }
+]
+
 function Game() {
   const [name, setName] = useState("<anonymous>")
   const [str, setStr] = useState(0)
@@ -90,9 +144,11 @@ function Game() {
   const [coin, setCoin] = useState(0)
   const [menu, setMenu] = useState(false)
   const [petPanel, setPetPanel] = useState(false)
+  const [charPanel, setCharPanel] = useState(false)
   const [stepsCount, setStepsCount] = useState(-1)
   const [counterObj, setCounterObj] = useState("")
   const [petPath, setPetPath] = useState(dragon_img)
+  const [charPath, setCharPath] = useState(char6)
   const [play, { stop }] = useSound(background_sound)
   const [toggleSound, setToggleSound] = useState(true)
 
@@ -179,9 +235,18 @@ function Game() {
     setPetPanel(petPanel => !petPanel)
   }
 
+  function handleCharPanel(e) {
+    setCharPanel(charPanel => !charPanel)
+  }
+
   function handleSwitchPet(e) {
     setPetPath(e.target.src)
     console.log(`Pet changed: ${e.target.src}`)
+  }
+
+  function handleSwitchChar(e) {
+    setCharPath(e.target.src)
+    console.log(`Char changed: ${e.target.src}`)
   }
 
   function handleMute(e) {
@@ -197,7 +262,7 @@ function Game() {
       {/* Stats div */}
       <div className="flex flex-col justify-between fixed w-96 h-full px-10 py-16">
         <div className="flex flex-col w-full bg-slate-900 rounded-lg py-8 shadow-2xl shadow-sky-900">
-          <img className="p-12 text-slate-50 " src={wolf_pixel} alt="Avatar"></img>
+          <img className="p-12 text-slate-50 " src={charPath} alt="Avatar" onClick={handleCharPanel}></img>
           <img className="absolute w-20 right-20 top-72" src={petPath} alt="Pet" onClick={handlePetPanel}></img>
           <span className="px-6 my-3 text-slate-50 font-medium text-xl">Welcome, {name}!</span>
           <span className="px-10 mt-6 text-slate-50">Strength: {str}</span>
@@ -254,6 +319,23 @@ function Game() {
                   <div key={img_obj.id} className="hover:bg-slate-300 rounded-lg">
                     <img className="w-20 h-20" src={img_obj.path} alt={`Img ${img_obj.id}`} onClick={handleSwitchPet}></img>
 
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
+          : null
+      }
+      {
+        (charPanel)
+          ? <div className="flex flex-col justify-center items-center bg-slate-900/20 fixed w-screen h-screen">
+            <div className="flex flex-col bg-slate-700/80 rounded-lg p-6 shadow-slate-50" style={{ "height": "35rem", "width": "35rem" }}>
+              <p className="text-slate-50 ml-8 mt-4" onClick={handleCharPanel}>x</p>
+              <p className="text-slate-50 font-medium text-3xl my-4 flex justify-center">Character</p>
+              <div className="flex overscroll-none flex-wrap justify-center">
+                {char_list.map(img_obj =>
+                  <div key={img_obj.id} className="hover:bg-slate-300 rounded-lg">
+                    <img className="w-20 h-20" src={img_obj.path} alt={`Img ${img_obj.id}`} onClick={handleSwitchChar}></img>
                   </div>
                 )}
               </div>
