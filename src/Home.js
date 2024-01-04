@@ -103,7 +103,8 @@ function Home() {
           <div className="flex flex-col items-center w-full pt-32 pb-64 border-b-1">
             <p className="font-semibold text-slate-100 text-4xl">More than <span className="text-6xl bg-gradient-to-r from-sky-400 to-blue-600 text-transparent bg-clip-text">100.000+</span> steps was run</p>
             <p className="mt-2 text-xl">Lonelywolf - The most powerful task-game for High School Students</p>
-            <div className="heart mt-16">
+            <div id="wrapper">
+              <div id="pulsingheart"></div>
             </div>
           </div>
 
@@ -133,7 +134,7 @@ function Home() {
 
 
           <div className="flex flex-col items-center mt-48 mb-24">
-            <p className="text-6xl text-slate-50">Our <span className="bg-gradient-to-r from-orange-400 to-red-600 text-transparent bg-clip-text">Partner</span></p>
+            <p className="text-6xl text-slate-50">Our <span className="bg-gradient-to-r from-orange-400 to-red-600 text-transparent bg-clip-text">Platforms</span></p>
 
             <div className="flex w-full justify-center items-center">
               <img className="w-96" src={google_fit_logo} alt="Google Fit Logo"></img>

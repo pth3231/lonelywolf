@@ -24,7 +24,6 @@
 
 .area {
   background: rgb(30 41 59);
-  background: -webkit-linear-gradient(to left, #343772, #3238a9);
   width: 100%;
 }
 
@@ -250,52 +249,46 @@
     opacity: 0;
     border-radius: 50%;
   }
-
 }
 
-@keyframes animateHeart {
-  0% {
-    transform: rotate(45deg) scale(0.8);
-  }
-  5% {
-    transform: rotate(45deg) scale(0.9);
-  }
-  10% {
-    transform: rotate(45deg) scale(0.8);
-  }
-  15% {
-    transform: rotate(45deg) scale(1);
-  }
-  50% {
-    transform: rotate(45deg) scale(0.8);
-  }
-  100% {
-    transform: rotate(45deg) scale(0.8);
-  }
+#wrapper {
+	position: absolute;
+  margin-left: 50px;
+  margin-top: 50px;
+	animation:pulse 1s infinite;
 }
 
-.heart {
-  background-color: #af1717;
-  width: 50px;
-  height: 50px;
-  position: relative;
-  transform: rotate(45deg);
-  animation: animateHeart 1.2s infinite;
-  
-  &::before, &::after {
-    content: "";
-    width: 50px;
-    height: 50px;
-    background-color: #af1717;
-    position: absolute;
-    border-radius: 50%;
-  }
-  
-  &::before {
-    left: -25px;
-  }
-  
-  &::after {
-    top: -25px;
-  }
+#pulsingheart { 
+  position: relative; 
+  width: 100px; 
+  height: 90px;
+} 
+
+#pulsingheart:before, #pulsingheart:after { 
+  position: absolute; 
+  content: ""; 
+  left: 50px; 
+  top: 100px; 
+  width: 50px; 
+  height: 80px; 
+  background: #aa0000; 
+  border-radius: 50px 50px 0 0; 
+  transform: rotate(-45deg);  
+  transform-origin: 0 100%;
+  animation:pulsecolor 1s infinite;
+} 
+
+#pulsingheart:after { 
+  left: 0; 
+  transform: rotate(45deg); 
+  transform-origin :100% 100%;
+  animation:pulsecolor 1s infinite;
+}
+
+@keyframes pulse {
+	10% {transform: scale(1.1)}
+}
+
+@keyframes pulsecolor {
+  10% {background: #dd0000}
 }
