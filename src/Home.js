@@ -106,7 +106,7 @@ function Home() {
           </div>
         </div>
 
-        <ul class="circles">
+        <ul className="circles">
           <li></li>
           <li></li>
           <li></li>
