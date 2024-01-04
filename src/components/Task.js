@@ -119,16 +119,16 @@ export default function Task() {
 
         <div className="mt-12 flex bg-gradient-to-r from-red-500 to-orange-400 w-full px-8 py-4 rounded-lg transition duration-500 hover:scale-105">
           <div className="flex flex-col w-3/5 mr-3">
-            <p className="mt-12 font-medium text-lg">Let's get started</p>
-            <p className="mt-2">Not only improve our health, but also help us build a bigger and stronger community!</p>
+            <p className="mt-12 font-medium text-lg">Fun fact about running!</p>
+            <p className="mt-2">Instead of 'running', the activity was known as 'pedestrianism' during the late 19th century.</p>
           </div>
           <img src={run_fire} alt="Run fire" className="w-2/5"></img>
         </div>
 
         <div className="mt-12 flex bg-gradient-to-r from-cyan-500 to-sky-800 w-full px-8 py-4 rounded-lg transition duration-500 hover:scale-105">
           <div className="flex flex-col w-3/5 mr-3">
-            <p className="mt-12 font-medium text-lg">Let's get started</p>
-            <p className="mt-2">Not only improve our health, but also help us build a bigger and stronger community!</p>
+            <p className="mt-12 font-medium text-lg">Fun fact about running!</p>
+            <p className="mt-2">Doing a short run or walk while at work can increase your productivity by 23%</p>
           </div>
           <img src={run_fire} alt="Run fire" className="w-2/5"></img>
         </div>
