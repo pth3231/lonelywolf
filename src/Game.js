@@ -193,7 +193,7 @@ function Game() {
   }
 
   return (
-    <div className="Game flex h-screen dark:bg-slate-800">
+    <div className="Game flex dark:bg-slate-800">
       {/* Stats div */}
       <div className="flex flex-col justify-between fixed w-96 h-full px-10 py-16">
         <div className="flex flex-col w-full bg-slate-900 rounded-lg py-8 shadow-2xl shadow-sky-900">
@@ -223,7 +223,7 @@ function Game() {
         <div className="flex flex-col w-96 h-full px-24 py-8 mr-9"></div>
 
         {/* Task panel div */}
-        <div className="flex w-full md:w-9/12 lg:w-2/3 lg:justify-center px-8 py-12">
+        <div className="flex w-full px-8 py-12">
           <Outlet />
         </div>
       </div>

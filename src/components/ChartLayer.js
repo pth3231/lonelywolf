@@ -56,7 +56,7 @@ export default function ChartLayer() {
   return <div className="text-slate-50 w-full">
     <p className='w-full flex justify-center font-medium text-2xl'>Steps Analysis</p>
     <div className='rounded-md mt-6 px-10 py-4'>
-      <Line
+      <Bar
         key="graph"
         data={{
           labels: id,
@@ -90,6 +90,5 @@ export default function ChartLayer() {
         }}
       />
     </div>
-    <button onClick={() => navigate("/game/chart")}>Reload</button>
   </div>
 }

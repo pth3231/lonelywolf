@@ -1,7 +1,9 @@
-export default function Announcements() {
-    return (
-        <div>
-            <p className="text-slate-50">Announcements</p>
-        </div>
-    )
+import React from 'react'
+
+export default function Announcements({ img_link, title }) {
+  return (
+    <div className="">
+      
+    </div>
+  )
 }
